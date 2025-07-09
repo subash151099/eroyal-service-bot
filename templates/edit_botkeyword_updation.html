@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12 mx-auto">
+            <h3>Edit Bot Keyword</h3><hr>
+            <form method="POST" action="{{ url_for('edit_botkeyword_updation', id=datas.ID) }}" enctype="multipart/form-data">
+                <!-- Keyword Input -->
+                <div class="form-group">
+                    <label for="key">Keyword</label>
+                    <input type="text" name="key" id="key" class="form-control" value="{{ datas.key }}" required>
+                </div>
+
+                <!-- Message Textarea -->
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea name="message" id="message" class="form-control" rows="50" required>{{ datas.message }}</textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

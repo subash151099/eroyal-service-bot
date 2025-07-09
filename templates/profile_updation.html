@@ -1,0 +1,209 @@
+{% extends 'dashboard.html' %}
+{% block title %}Profile Updation{% endblock %}
+{% block content %}
+<h3 class='text-center text-muted mb-3'></h3>
+<div class="container">
+
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          padding: 30px;
+        }
+    
+        .admin-container {
+          max-width: 500px;
+          margin: auto;
+          background: white;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    
+        .profile-picture {
+          text-align: center;
+        }
+    
+        .profile-picture img {
+          width: 180px;
+          height: 180px;
+          border-radius: 50%;
+          object-fit: cover;
+          margin-bottom: 10px;
+        }
+    
+        .btn-group {
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+        }
+    
+        .btn {
+          padding: 6px 12px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          color: white;
+        }
+    
+        .btn.edit {
+          background-color: #007bff;
+        }
+    
+        .btn.delete {
+          background-color: #dc3545;
+        }
+    
+        .info-group {
+          margin-top: 20px;
+        }
+    
+        .info-field {
+          margin: 15px 0;
+        }
+    
+        .info-label {
+          font-weight: bold;
+          display: block;
+          margin-bottom: 5px;
+        }
+    
+        .info-input {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+    
+        input[type="text"],
+        input[type="password"] {
+          padding: 7px;
+          width: 100%;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+        }
+    
+        .edit-btn {
+          background-color: #28a745;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          padding: 6px 10px;
+          cursor: pointer;
+        }
+    
+        .eye-icon {
+          cursor: pointer;
+          font-size: 1rem;
+          color: #007bff;
+        }
+    
+        input[type="file"] {
+          display: none;
+        }
+    
+        label.upload-label {
+          background-color: #007bff;
+          color: white;
+          padding: 6px 12px;
+          border-radius: 5px;
+          cursor: pointer;
+          display: inline-block;
+          margin-top: 10px;
+        }
+      </style>
+    </head>
+    <body>
+    
+    <div class="admin-container">
+    
+      <div class="profile-picture">
+        <img id="profileImg" src="https://via.placeholder.com/120" alt="Admin Picture">
+        <div>
+          <label for="uploadImg" class="upload-label">Browse Image</label>
+          <input type="file" id="uploadImg" accept="image/*" onchange="uploadImage(event)">
+        </div>
+        <div class="btn-group">
+          <button class="btn delete" onclick="deletePicture()">Delete</button>
+        </div>
+      </div>
+    
+      <div class="info-group">
+        <div class="info-field">
+          <label class="info-label">Admin Name</label>
+          <div class="info-input">
+            <input type="text" id="adminName" value="Subash">
+          </div>
+        </div>
+    
+        <div class="info-field">
+          <label class="info-label">Username</label>
+          <div class="info-input">
+            <input type="text" id="username" value="admin123">
+            <button class="edit-btn" onclick="editField('username')">Edit</button>
+          </div>
+        </div>
+    
+        <div class="info-field">
+          <label class="info-label">Password</label>
+          <div class="info-input">
+            <input type="password" id="password" value="mypassword">
+            <i class="fa-solid fa-eye eye-icon" onclick="togglePassword(this)"></i>
+            <button class="edit-btn" onclick="editField('password')">Edit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      function togglePassword(icon) {
+        const passwordInput = document.getElementById('password');
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          icon.classList.remove('fa-eye');
+          icon.classList.add('fa-eye-slash');
+        } else {
+          passwordInput.type = 'password';
+          icon.classList.remove('fa-eye-slash');
+          icon.classList.add('fa-eye');
+        }
+      }
+    
+      function editField(id) {
+        const field = document.getElementById(id);
+        field.focus();
+      }
+    
+      function uploadImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            document.getElementById('profileImg').src = e.target.result;
+          }
+          reader.readAsDataURL(file);
+        }
+      }
+    
+      function deletePicture() {
+        const confirmDelete = confirm("Are you sure you want to delete the profile picture?");
+        if (confirmDelete) {
+          document.getElementById("profileImg").src = "https://via.placeholder.com/120";
+        }
+      }
+    </script>
+    
+    </body>
+    </html>
+    
+
+
+    
+</div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'dashboard.html' %}
+
+{% block title %}Calendar Updation{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style>
+        /* Custom styles for fixed header and scrollable table */
+        .table-container {
+            max-height: 400px; /* Adjust max height as needed */
+            overflow-y: auto;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+
+  <!--To Do List-->
+  <h3 class='text-center text-muted mb-3'>Customs Leave List</h3>
+  <p class='text-right'><a href='{{url_for("add_leave_calendar")}}' class='btn btn-success '>Add Leave</a></p>
+  <div class="mb-3">
+    <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+</div>
+<div class="table-container">
+    <table class='table table-bordered'>
+        <thead class="table-dark">
+    <tr>
+      <th>SNo</th>
+      <th>Date</th>
+      <th>Leave</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% for row in datas %}
+        <tr>
+          <td>{{loop.index}}</td>
+          <td>{{row.date}}</td>
+          <td>{{row.leave}}</td>
+          <td><a href='{{url_for("edit_leave_calendar",id=row.ID)}}' class='btn btn-primary'>Edit</a></td>
+          <td><a href='{{url_for("delete_leave_calendar",id=row.ID)}}' class='btn btn-danger' onclick='return confirm("Are You Sure")'>Delete</a></td>
+        </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+  <!--To Do List-->
+  <!-- Bootstrap JS Bundle (required for some functionalities like dropdowns, modals, etc.) -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+      // JavaScript for table filtering
+      document.addEventListener("DOMContentLoaded", function () {
+          document.getElementById("searchInput").addEventListener("input", function () {
+              let filter = this.value.toLowerCase();
+              let rows = document.querySelectorAll(".table-container tbody tr");
+
+              rows.forEach(row => {
+                  let text = row.textContent.toLowerCase();
+                  if (text.includes(filter)) {
+                      row.style.display = "";
+                  } else {
+                      row.style.display = "none";
+                  }
+              });
+          });
+      });
+  </script>
+  
+
+{% endblock %}

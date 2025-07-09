@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #007bff, #6610f2);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .login-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            max-width: 850px;
+            width: 100%;
+        }
+
+        .login-image {
+            background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f');
+            background-size: cover;
+            background-position: center;
+            min-height: 500px;
+        }
+
+        .login-form {
+            padding: 40px 30px;
+        }
+
+        .form-floating > .form-control:focus ~ label,
+        .form-floating > .form-control:not(:placeholder-shown) ~ label {
+            opacity: 0.75;
+            transform: scale(.85) translateY(-0.8rem) translateX(0.15rem);
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #a71d2a;
+        }
+
+        .toggle-password {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            right: 1rem;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        .contact-options {
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        .contact-options a {
+            color: #343a40;
+            text-decoration: none;
+        }
+
+        .contact-options a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="login-card row g-0">
+        <!-- Side Image -->
+        <div class="col-md-6 login-image d-none d-md-block"></div>
+
+        <!-- Login Form -->
+        <div class="col-md-6">
+            <div class="login-form">
+                <h2 class="text-center mb-4">User Login</h2>
+
+                <!-- Flash Message -->
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="alert alert-danger">{{ messages[0] }}</div>
+                    {% endif %}
+                {% endwith %}
+
+                <form action="{{ url_for('client_login') }}" method="post">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="company_license" name="company_license" placeholder="Company License" required>
+                        <label for="company_license">Company License</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                        <label for="username">Username</label>
+                    </div>
+                    <div class="form-floating mb-3 position-relative">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                        <label for="password">Password</label>
+                        <span class="toggle-password" onclick="togglePassword()">👁</span>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="remember">
+                        <label class="form-check-label" for="remember">Remember me</label>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                        <button type="button" class="btn btn-danger" onclick="clearForm()">Cancel</button>
+                    </div>
+                    <div class="text-center mt-3">
+                        <p>Don't have an account yet? <a href="{{ url_for('client_register') }}" class="btn btn-link p-0">Register now</a></p>
+                    </div>
+                </form>
+
+                <!-- Contact Info -->
+                <div class="contact-options text-center">
+                    <a href="{{ url_for('login') }}" class="btn">Admin Login</a>
+
+                    
+                    <ul class="list-unstyled mb-0">
+                        <li><a href="mailto:support@royaltechsystems.co.in">support@royaltechsystems.co.in</a></li>
+                        <li><a href="tel:+919840241678">+91 9840241678</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function clearForm() {
+            document.getElementById('company_license').value = '';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('remember').checked = false;
+        }
+
+        function togglePassword() {
+            const pwd = document.getElementById('password');
+            pwd.type = pwd.type === 'password' ? 'text' : 'password';
+        }
+    </script>
+</body>
+</html>
